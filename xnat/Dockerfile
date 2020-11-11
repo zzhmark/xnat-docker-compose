@@ -2,6 +2,7 @@ FROM tomcat:7-jre8-alpine
 MAINTAINER Matt Kelsey <kelseym@wustl.edu>
 
 ARG XNAT_VER=1.7.6
+ARG MY_XNAT_DOWNLOAD=xnat-web-${XNAT_VER}.war
 ARG XNAT_ROOT=/data/xnat
 ARG XNAT_HOME=/data/xnat/home
 ARG XNAT_DATASOURCE_DRIVER=org.postgresql.Driver
@@ -15,7 +16,7 @@ ARG TOMCAT_XNAT_FOLDER_PATH=${CATALINA_HOME}/webapps/${TOMCAT_XNAT_FOLDER}
 ADD make-xnat-config.sh /usr/local/bin/make-xnat-config.sh
 ADD wait-for-postgres.sh /usr/local/bin/wait-for-postgres.sh
 
-RUN apk add --no-cache postgresql-client wget
+RUN apk add --no-cache postgresql-client
 RUN rm -rf ${CATALINA_HOME}/webapps/*
 RUN mkdir -p \
         ${TOMCAT_XNAT_FOLDER_PATH} \
@@ -31,10 +32,7 @@ RUN mkdir -p \
         ${XNAT_ROOT}/prearchive
 RUN /usr/local/bin/make-xnat-config.sh
 RUN rm /usr/local/bin/make-xnat-config.sh
-RUN wget --no-verbose --output-document=/tmp/xnat-web-${XNAT_VER}.war https://api.bitbucket.org/2.0/repositories/xnatdev/xnat-web/downloads/xnat-web-${XNAT_VER}.war
-RUN unzip -o -d ${TOMCAT_XNAT_FOLDER_PATH} /tmp/xnat-web-${XNAT_VER}.war
-RUN rm -f /tmp/xnat-web-${XNAT_VER}.war
-RUN apk del wget
+ADD ${MY_XNAT_DOWNLOAD} ${TOMCAT_XNAT_FOLDER_PATH}
 
 EXPOSE 8080
 
