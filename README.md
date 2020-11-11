@@ -1,3 +1,7 @@
+# Customized Note
+This fork is changed to enable offline installation of xnat. The downloaded xnat .war file should be placed with its Dockerfile.
+Make the version and the filename consistent when needed.
+
 # Dockerized XNAT
 Use this repository to quickly deploy an [XNAT](https://xnat.org/) instance on [docker](https://www.docker.com/).
 
