@@ -1,4 +1,4 @@
-# Customized Note
+# Customization Note
 This fork is changed to enable offline installation of xnat. The downloaded xnat .war file should be placed with its Dockerfile.
 Make the version and the filename consistent when needed.
 
